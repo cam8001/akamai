@@ -100,6 +100,8 @@ before_install:
   # Codesniffer and Coder
   - composer global require drupal/coder:8.2.5
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
+  # Akamai requirements
+  - composer global require akamai-open/edgegrid-client:0.4.2
 
 install:
   - drupal-ti install
