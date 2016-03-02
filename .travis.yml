@@ -10,9 +10,12 @@ sudo: false
 php:
   - 5.5
   - 5.6
+  - 7
 
 matrix:
   fast_finish: true
+   allow_failures:
+      - php: 7
 
 env:
   global:
@@ -22,7 +25,7 @@ env:
 
     # Configuration variables.
     - DRUPAL_TI_MODULE_NAME="akamai"
-    # - DRUPAL_TI_SIMPLETEST_GROUP="akamai"
+    - DRUPAL_TI_SIMPLETEST_GROUP="akamai"
 
     # Define runners and environment vars to include before and after the
     # main runners / environment vars.
@@ -91,9 +94,12 @@ mysql:
 
 before_install:
   - composer self-update
-  # - cd ./tests
+  - cd ./tests
   - composer global require "lionsad/drupal_ti:1.*"
   - drupal-ti before_install
+  # Codesniffer and Coder
+  - composer global require drupal/coder:8.2.5
+  - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
 
 install:
   - drupal-ti install
