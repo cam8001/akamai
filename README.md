@@ -1,5 +1,7 @@
 # Akamai
 
+-insert-travis-status-here-
+
 This module provides a Drupal 8 service to interact with the [Akamai Content
 Control Utility](https://developer.akamai.com/api/purge/ccu/overview.html).
 
