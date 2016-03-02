@@ -1,6 +1,6 @@
 # Akamai
 
--insert-travis-status-here-
+[![Build Status](https://travis-ci.org/cam8001/akamai.svg?branch=master)](https://travis-ci.org/cam8001/akamai)
 
 This module provides a Drupal 8 service to interact with the [Akamai Content
 Control Utility](https://developer.akamai.com/api/purge/ccu/overview.html).
