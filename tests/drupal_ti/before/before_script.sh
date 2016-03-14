@@ -23,6 +23,9 @@ git clone --depth 1 --branch 8.x-1.x http://git.drupal.org/project/composer_mana
 
 # Initialize composer manager
 php "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH/composer_manager/scripts/init.php"
+# Now run it.
+drush composer-update
+
 
 # Ensure the module is linked into the code base and enabled.
 # Note: This function is re-entrant.
