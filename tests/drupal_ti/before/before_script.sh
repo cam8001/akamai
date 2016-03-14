@@ -19,17 +19,19 @@ cd "$DRUPAL_TI_DRUPAL_DIR"
 cd "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH"
 
 # Manually clone the dependencies for Composer Manager
-git clone --depth 1 --branch 8.x-1.x http://git.drupal.org/project/composer_manager.git
+#git clone --depth 1 --branch 8.x-1.x http://git.drupal.org/project/composer_manager.git
 
 # Initialize composer manager
-php "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH/composer_manager/scripts/init.php"
+#php "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH/composer_manager/scripts/init.php"
 # Now run it.
-drush composer-update
+#drush composer-update
 
 
 # Ensure the module is linked into the code base and enabled.
 # Note: This function is re-entrant.
-drupal_ti_ensure_module_linked
+#drupal_ti_ensure_module_linked
+
+composer require akamai-open/edgegrid-client:0.4.3
 
 # Update composer
 cd "$DRUPAL_TI_DRUPAL_DIR"
