@@ -81,9 +81,10 @@ env:
   matrix:
     # [[[ SELECT ANY OR MORE OPTIONS ]]]
     #- DRUPAL_TI_RUNNERS="phpunit"
-    - DRUPAL_TI_RUNNERS="simpletest"
+    #- DRUPAL_TI_RUNNERS="simpletest"
     #- DRUPAL_TI_RUNNERS="behat"
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
+    - DRUPAL_TI_RUNNERS="phpunit simpletest"
     # Use phpunit-core to test modules with phpunit with Drupal 8 core.
     #- DRUPAL_TI_RUNNERS="phpunit-core"
 
@@ -100,8 +101,6 @@ before_install:
   # Codesniffer and Coder
   - composer global require drupal/coder:8.2.5
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
-  # Akamai requirements
-  - composer global require akamai-open/edgegrid-client:0.4.2
 
 install:
   - drupal-ti install
@@ -111,6 +110,7 @@ before_script:
 
 script:
   - drupal-ti script
+  - drupal-ti --include drupal_ti/phpcs.sh
 
 after_script:
   - drupal-ti after_script
