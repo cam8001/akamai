@@ -103,6 +103,7 @@ before_script:
 
 script:
   - echo -e "Running script"
+  - cd /home/travis/build/cam8001/drupal-8/drupal
   - drupal-ti script
 
 after_script:
