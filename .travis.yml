@@ -92,7 +92,8 @@ before_install:
 
 install:
   - drupal-ti install
-  - printenv
+  - ls -lash
+  - find . -type d -name phpunit
 
 before_script:
   - echo -e "Running before script"
