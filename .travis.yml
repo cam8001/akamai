@@ -102,7 +102,8 @@ before_script:
 script:
   - echo -e "Running script"
   - drupal-ti script
-  - drupal-ti --include drupal_ti/phpcs.sh
+  - ls -l
+  - drupal-ti --include tests/phpcs.sh
 
 after_script:
   - echo -e "Running after script"
