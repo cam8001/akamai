@@ -9,8 +9,6 @@ sudo: false
 
 php:
   - 5.5
-  - 5.6
-  - 7
 
 matrix:
   fast_finish: true
@@ -90,23 +88,32 @@ before_install:
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
 
 install:
+  - echo -e "Running install"
   - drupal-ti install
   - ls -lash $DRUPAL_TI_DRUPAL_DIR
-  - CURRENT_DIR=`pwd`
+  - TMP_CURRENT_DIR=`pwd`
   - cd $DRUPAL_TI_DRUPAL_DIR
+  - ls -l
   - wget https://www.drupal.org/files/issues/2664274-19-fix-composer.patch
+  - ls -l
   - git apply -v 2664274-19-fix-composer.patch
+  - cd $TMP_CURRENT_DIR
+  - ls -l
 
 before_script:
+  - echo -e "Running before script"
   - drupal-ti --include .travis-before-script.sh
+  # This will install Drupal.
   - drupal-ti before_script
 
 script:
+  - echo -e "Running script"
   - drupal-ti script
   - drupal-ti --include drupal_ti/phpcs.sh
 
 after_script:
+  - echo -e "Running after script"
   - drupal-ti after_script
-  
+
 notifications:
   email: false

@@ -1,4 +1,5 @@
 #!/bin/bash
+echo - "Running .travis-before-script.sh"
 
 set -e $DRUPAL_TI_DEBUG
 
