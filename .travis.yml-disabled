@@ -64,10 +64,10 @@ env:
   matrix:
     # [[[ SELECT ANY OR MORE OPTIONS ]]]
     #- DRUPAL_TI_RUNNERS="phpunit"
-    #- DRUPAL_TI_RUNNERS="simpletest"
+    - DRUPAL_TI_RUNNERS="simpletest"
     #- DRUPAL_TI_RUNNERS="behat"
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
-    - DRUPAL_TI_RUNNERS="phpunit simpletest"
+    #- DRUPAL_TI_RUNNERS="phpunit simpletest"
     # Use phpunit-core to test modules with phpunit with Drupal 8 core.
     #- DRUPAL_TI_RUNNERS="phpunit-core"
 
@@ -92,8 +92,6 @@ before_install:
 
 install:
   - drupal-ti install
-  - ls -lash
-  - find . -type d -name phpunit
 
 before_script:
   - echo -e "Running before script"
