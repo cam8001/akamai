@@ -27,7 +27,7 @@ env:
 
     # Define runners and environment vars to include before and after the
     # main runners / environment vars.
-    - DRUPAL_TI_SCRIPT_DIR_BEFORE="./drupal_ti/before"
+    #- DRUPAL_TI_SCRIPT_DIR_BEFORE="./drupal_ti/before"
     #- DRUPAL_TI_SCRIPT_DIR_AFTER="./drupal_ti/after"
 
     # The environment to use, supported are: drupal-7, drupal-8
@@ -86,13 +86,13 @@ before_install:
   # Codesniffer and Coder
   - composer global require drupal/coder:8.2.5
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
+  # Run PHPCS on the module code only (before dependencies are added).
+  - phpcs --report=full --standard=Drupal "$TRAVIS_BUILD_DIR" || true
 
 install:
   - drupal-ti install
   - printenv
-  #- wget https://www.drupal.org/files/issues/2664274-19-fix-composer.patch
-  #- git apply -v 2664274-19-fix-composer.patch
-  
+
 before_script:
   - echo -e "Running before script"
   - drupal-ti --include .travis-before-script.sh
@@ -104,8 +104,8 @@ script:
   - drupal-ti script
 
 after_script:
-  - echo -e "Running after script"
-  - drupal-ti after_script
+  #- echo -e "Running after script"
+  #- drupal-ti after_script
 
 notifications:
   email: false
