@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains Drupal\akamai\Form\AkamaiConfigForm.
+ * Contains Drupal\akamai\Form\ConfigForm.
  */
 
 namespace Drupal\akamai\Form;
@@ -13,14 +13,14 @@ use Drupal\Core\Url;
 /**
  * A configuration form to interact with Akamai API settings.
  */
-class AkamaiConfigForm extends ConfigFormBase {
+class ConfigForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return [
-      'akamai.settings'
+      'akamai.settings',
     ];
   }
 
@@ -37,19 +37,8 @@ class AkamaiConfigForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('akamai.settings');
 
+    // @todo decide whether we want a global killswitch here.
     $form = array();
-
-    $form['disable_fieldset'] = array(
-      '#type' => 'fieldset',
-      '#title' => $this->t('Disable Akamai Cache Clearing'),
-      '#description' => $this->t('Set this field to disable cache clearing during imports, migrations, or other batch processes.'),
-    );
-
-    $form['disable_fieldset']['disabled'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Disable cache clearing'),
-      '#default_value' => $config->get('disable'),
-    );
 
     // Link to instructions on how to get Akamai credentials from Luna.
     $luna_url = 'https://developer.akamai.com/introduction/Prov_Creds.html';
@@ -62,7 +51,7 @@ class AkamaiConfigForm extends ConfigFormBase {
     );
 
     $form['akamai_credentials_fieldset']['rest_api_url'] = array(
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('REST API URL'),
       '#description'   => $this->t('The URL of the Akamai CCUv2 API host. It should be in the format *.purge.akamaiapis.net/'),
       '#default_value' => $config->get('rest_api_url'),
@@ -147,7 +136,7 @@ class AkamaiConfigForm extends ConfigFormBase {
     );
 
     $form['devel_fieldset']['mock_endpoint'] = array(
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#size' => 100,
       '#title' => $this->t('Mock endpoint URI'),
       '#default_value' => $config->get('mock_endpoint'),
@@ -164,7 +153,6 @@ class AkamaiConfigForm extends ConfigFormBase {
     $values = $form_state->getValues();
 
     $this->config('akamai.settings')
-      ->set('disabled', $values['disabled'])
       ->set('rest_api_url', $values['rest_api_url'])
       ->set('client_token', $values['client_token'])
       ->set('client_secret', $values['client_secret'])
@@ -244,4 +232,5 @@ class AkamaiConfigForm extends ConfigFormBase {
     $action[$value] = TRUE;
     return $action;
   }
+
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\akamai\AkamaiAuthentication.
+ */
 
 namespace Drupal\akamai;
 
