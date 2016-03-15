@@ -90,8 +90,12 @@ before_install:
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
 
 install:
-  - ls -lash $DRUPAL_TI_DRUPAL_DIR
   - drupal-ti install
+  - ls -lash $DRUPAL_TI_DRUPAL_DIR
+  - CURRENT_DIR=`pwd`
+  - cd $DRUPAL_TI_DRUPAL_DIR
+  - wget https://www.drupal.org/files/issues/2664274-19-fix-composer.patch
+  - git apply -v 2664274-19-fix-composer.patch
 
 before_script:
   - drupal-ti --include .travis-before-script.sh
