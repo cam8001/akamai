@@ -91,7 +91,6 @@ install:
   - echo -e "Running install"
   - drupal-ti install
   - ls -lash $DRUPAL_TI_DRUPAL_BASE
-  - ls -lash "$DRUPAL_TI_DRUPAL_BASE/drupal"
   - ls -lash "$TRAVIS_BUILD_DIR/../drupal-8"
   - ls -lash $DRUPAL_TI_DRUPAL_DIR
   - TMP_CURRENT_DIR=`pwd`
