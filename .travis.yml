@@ -90,6 +90,7 @@ before_install:
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
 
 install:
+  - ls -lash $DRUPAL_TI_DRUPAL_DIR
   - drupal-ti install
 
 before_script:
