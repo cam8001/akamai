@@ -7,6 +7,9 @@ set -e $DRUPAL_TI_DEBUG
 # Note: This function is re-entrant.
 drupal_ti_ensure_drupal
 
+# Run PHPCS on the module code only (before dependencies are added).
+phpcs --report=full --standard=Drupal "$DRUPAL_TI_DRUPAL_DIR/modules/$DRUPAL_TI_MODULE_NAME" || true
+
 # Download dependencies.
 mkdir -p "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH"
 cd "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH"
