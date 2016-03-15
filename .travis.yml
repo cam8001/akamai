@@ -93,6 +93,7 @@ install:
   - drupal-ti install
 
 before_script:
+  - drupal-ti --include .travis-before-script.sh
   - drupal-ti before_script
 
 script:
@@ -101,6 +102,6 @@ script:
 
 after_script:
   - drupal-ti after_script
-
+  
 notifications:
   email: false
