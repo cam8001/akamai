@@ -102,7 +102,7 @@ script:
   # || true means the test will not fail if there are code style issues.
   #- phpcs --report=full --standard=Drupal --ignore=vendor . || true
   # Get the Drupal install directory.
-  - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR../$DRUPAL_TI_ENVIRONMENT/drupal"
+  - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR/../$DRUPAL_TI_ENVIRONMENT/drupal"
   - pwd
   - ls -lash $DRUPAL_BUILD_DIR
   - $DRUPAL_BUILD_DIR/vendor/phpunit
