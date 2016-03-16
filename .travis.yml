@@ -82,7 +82,6 @@ before_install:
   - composer --version
   # Token to avoid rate limiting, see https://www.drupal.org/node/2652054
   - git config --global github.accesstoken $GITHUB_OAUTH_TOKEN
-  # - cd ./tests
   - composer global require "lionsad/drupal_ti:1.*"
   - drupal-ti before_install
   # Codesniffer and Coder
