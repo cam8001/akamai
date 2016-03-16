@@ -105,7 +105,7 @@ script:
   - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR/../$DRUPAL_TI_ENVIRONMENT/drupal"
   - pwd
   - ls -lash $DRUPAL_BUILD_DIR
-  - $DRUPAL_BUILD_DIR/vendor/phpunit
+  - $DRUPAL_BUILD_DIR/vendor/bin/phpunit
   #- drupal-ti script
 
 after_script:
