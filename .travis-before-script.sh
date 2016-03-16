@@ -24,4 +24,4 @@ git apply -v 2664274-19-fix-composer.patch
 cd "$TMP_CWD"
 php "$DRUPAL_TI_DRUPAL_DIR/$DRUPAL_TI_MODULES_PATH/composer_manager/scripts/init.php"
 composer drupal-rebuild
-composer update -n --verbose
+composer update -n --lock --verbose
