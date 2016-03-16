@@ -101,9 +101,8 @@ script:
   - echo -e "Running script"
   # || true means the test will not fail if there are code style issues.
   #- phpcs --report=full --standard=Drupal --ignore=vendor . || true
-  - ls -lash /home/travis/build/cam8001/drupal-8/drupal/modules
   # Get the Drupal install directory.
-  - export DRUPAL_BUILD_DIR=`realpath "$TRAVIS_BUILD_DIR../$DRUPAL_TI_ENVIRONMENT/drupal"`
+  - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR../$DRUPAL_TI_ENVIRONMENT/drupal"
   - pwd
   - ls -lash $DRUPAL_BUILD_DIR
   - $DRUPAL_BUILD_DIR/vendor/phpunit
