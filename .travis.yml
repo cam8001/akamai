@@ -67,7 +67,7 @@ env:
     #- DRUPAL_TI_RUNNERS="simpletest"
     #- DRUPAL_TI_RUNNERS="behat"
     #- DRUPAL_TI_RUNNERS="phpunit simpletest behat"
-    - DRUPAL_TI_RUNNERS="phpunit simpletest"
+    - DRUPAL_TI_RUNNERS="simpletest"
     # Use phpunit-core to test modules with phpunit with Drupal 8 core.
     #- DRUPAL_TI_RUNNERS="phpunit-core"
 
@@ -100,11 +100,14 @@ before_script:
 script:
   - echo -e "Running script"
   # || true means the test will not fail if there are code style issues.
-  - phpcs --report=full --standard=Drupal --ignore=vendor . || true
-  - cd /home/travis/build/cam8001/drupal-8/drupal
+  #- phpcs --report=full --standard=Drupal --ignore=vendor . || true
+  - ls -lash /home/travis/build/cam8001/drupal-8/drupal/modules
+  # Get the Drupal install directory.
+  - export DRUPAL_BUILD_DIR=`realpath "$TRAVIS_BUILD_DIR../$DRUPAL_TI_ENVIRONMENT/drupal"`
   - pwd
-  - ls -lash
-  - drupal-ti script
+  - ls -lash $DRUPAL_BUILD_DIR
+  - $DRUPAL_BUILD_DIR/vendor/phpunit
+  #- drupal-ti script
 
 after_script:
   #- echo -e "Running after script"
