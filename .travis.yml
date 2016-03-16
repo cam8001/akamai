@@ -86,9 +86,6 @@ before_install:
   # Codesniffer and Coder
   - composer global require drupal/coder:8.2.5
   - ln -s ~/.composer/vendor/drupal/coder/coder_sniffer/Drupal ~/.composer/vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
-  # Run PHPCS on the module code only (before dependencies are added).
-  # || true means the test will not fail if there are code style issues.
-  - phpcs --report=full --standard=Drupal "$TRAVIS_BUILD_DIR" || true
 
 install:
   - drupal-ti install
@@ -101,7 +98,8 @@ before_script:
 
 script:
   - echo -e "Running script"
-  - ls -l
+  # || true means the test will not fail if there are code style issues.
+  - phpcs --report=full --standard=Drupal "$TRAVIS_BUILD_DIR" || true
   - drupal-ti script
 
 after_script:
