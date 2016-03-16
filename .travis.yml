@@ -99,7 +99,7 @@ before_script:
 script:
   - echo -e "Running script"
   # || true means the test will not fail if there are code style issues.
-  - phpcs --report=full --standard=Drupal "$TRAVIS_BUILD_DIR" || true
+  - phpcs --report=full --standard=Drupal . || true
   - drupal-ti script
 
 after_script:
