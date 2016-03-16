@@ -101,7 +101,11 @@ script:
   - echo -e "Running script"
   # || true means the test will not fail if there are code style issues.
   - phpcs --report=full --standard=Drupal --ignore=vendor . || true
-  - drupal-ti script
+  - pwd
+  - ls -lash
+  - ls -lash "$DRUPAL_TI_DRUPAL_DIR"
+  - printenv
+  #- drupal-ti script
 
 after_script:
   #- echo -e "Running after script"
