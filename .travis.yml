@@ -79,7 +79,7 @@ mysql:
 before_install:
   #- php -i | grep xdebug
   # - php -i | grep ini
-  - PHPENV_VERSION_NAME="$phpenv version | awk '{print $1}')"
+  - PHPENV_VERSION_NAME=$(phpenv version | awk '{print $1}')
   - PHPENV_CONFIG_PATH="/home/travis/.phpenv/versions/${PHPENV_VERSION_NAME}/etc/conf.d"
   - printenv
   - cp "$PHPENV_CONFIG_PATH/xdebug.ini" /tmp/xdebug.ini
