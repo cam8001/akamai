@@ -79,9 +79,11 @@ mysql:
 before_install:
   #- php -i | grep xdebug
   # - php -i | grep ini
+  - PHPENV_VERSION_NAME="$(rbenv-version-name)"
+  - PHPENV_CONFIG_PATH="${RBENV_ROOT}/versions/${PHPENV_VERSION_NAME}/etc/conf.d"
   - printenv
   - cp /home/travis/.phpenv/versions/5.5.21/etc/conf.d/xdebug.ini /tmp/xdebug.ini
-  - l /tmp/xdebug.ini
+  - ls /tmp/xdebug.ini
   # Kill the build
   - false
   - phpenv config-rm xdebug.ini
