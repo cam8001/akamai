@@ -92,20 +92,16 @@ install:
   - drupal-ti install
 
 before_script:
-  - echo -e "Running before script"
   - drupal-ti --include .travis-before-script.sh
   # This will install Drupal.
   - drupal-ti before_script
 
 script:
-  - echo -e "Running script"
   # || true means the test will not fail if there are code style issues.
-  #- phpcs --report=full --standard=Drupal --ignore=vendor . || true
+  - phpcs --report=full --standard=Drupal --ignore=vendor . || true
   # Get the Drupal install directory.
   - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR/../$DRUPAL_TI_ENVIRONMENT/drupal"
-  - pwd
-  - ls -lash $DRUPAL_BUILD_DIR
-  - $DRUPAL_BUILD_DIR/vendor/bin/phpunit -v --debug --bootstrap="$DRUPAL_BUILD_DIR/core/tests/bootstrap.php"
+  - $DRUPAL_BUILD_DIR/vendor/bin/phpunit --coverage-text --bootstrap="$DRUPAL_BUILD_DIR/core/tests/bootstrap.php"
   #- drupal-ti script
 
 after_script:
