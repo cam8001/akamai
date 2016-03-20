@@ -77,8 +77,11 @@ mysql:
   encoding: utf8
 
 before_install:
-  - php -i | grep xdebug
-  - php -i | grep ini
+  #- php -i | grep xdebug
+  # - php -i | grep ini
+  - printenv
+  - cp /home/travis/.phpenv/versions/5.5.21/etc/conf.d/xdebug.ini /tmp/xdebug.ini
+  - l /tmp/xdebug.ini
   # Kill the build
   - false
   - phpenv config-rm xdebug.ini
