@@ -101,6 +101,8 @@ script:
   - phpcs --report=full --standard=Drupal --ignore=vendor . || true
   # Get the Drupal install directory.
   - export DRUPAL_BUILD_DIR="$TRAVIS_BUILD_DIR/../$DRUPAL_TI_ENVIRONMENT/drupal"
+  # Renable xdebug for coverage tracking.
+  - phpenv config-add xdebug.ini
   - $DRUPAL_BUILD_DIR/vendor/bin/phpunit --coverage-text --bootstrap="$DRUPAL_BUILD_DIR/core/tests/bootstrap.php"
   #- drupal-ti script
 
