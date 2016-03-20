@@ -109,7 +109,7 @@ script:
   # Renable xdebug for coverage tracking.
   - phpenv config-add /tmp/xdebug.ini
   - $DRUPAL_BUILD_DIR/vendor/bin/phpunit --coverage-text --bootstrap="$DRUPAL_BUILD_DIR/core/tests/bootstrap.php"
-  #- drupal-ti script
+  - drupal-ti script
 
 after_script:
   #- echo -e "Running after script"
@@ -117,3 +117,6 @@ after_script:
 
 notifications:
   email: false
+  hipchat:
+    rooms:
+      secure: FZ4NW7O70BLMl5xhzlYk7y1NClRO8CWcnjO5vz54xywymIbAOVDjMAkjZOx1imOXsKS9lQgYmxUvYG5gspPYpRuuP9W8uwsTVwNr+F3A0txdgaJOAmfBDu/faBcif17oMrlQNGpZMohcx92ff+AloW4WYvGwD3Kfe+cQlkRV1Gg7rQEeiCp3U/2bXzr9ELfXTomYVgM5QiAafNIFWHa3kQJ72F/8ZCEbs3YlEeK57B0JHrVVwWbCv8U6nBtIlySj/7cWufoB7icuVQq7aCbFx7xZgtkalpUxyM+gkPAYqH1xnu0tB1KpsdjSfQIlW0lBGWOpjTvCnFovAhvEZv2O+lzsN0yUDyFqsjSHNIi4JV9ckZEB8i2TqAecFZoCYw2AjD04oxu8053jRwp6EA6OovEf/UhM+mT9tk9g3CAEzgBG4ZWkd64QLHXrRmQzwsIpZ6cw6CbhNYSFuz+AyXE7jfq3Sh3N63ixWO1+MF/sYnYbB/+gktE1aMqhmr+v8DY3JQC9Tz0F12pug+uboBacyD0c4u3oNCAf/oiiDkHC5sEmbg/RR37kixKInWryCQ8pG2lW+gEPeWzJpC7cnRNRTrNkPXLAt++eEUp2MRRW2uRYzoNUmHVUpUIZPeUBCDRtyr4WgE1rdxt1lj8zK2Ae4AgJwKD+AAL+QsteJRkAWqk=
