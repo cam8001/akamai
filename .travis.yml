@@ -80,10 +80,13 @@ before_install:
   #- php -i | grep xdebug
   # - php -i | grep ini
   - PHPENV_VERSION_NAME=$(phpenv version | awk '{print $1}')
+  - echo $PHPENV_VERSION_NAME
   - PHPENV_CONFIG_PATH="/home/travis/.phpenv/versions/${PHPENV_VERSION_NAME}/etc/conf.d"
+  - echo $PHPENV_CONFIG_PATH
   - printenv
   - cp "$PHPENV_CONFIG_PATH/xdebug.ini" /tmp/xdebug.ini
   - ls /tmp/xdebug.ini
+  - cat /tmp/xdebug.ini
   # Kill the build
   - false
   - phpenv config-rm xdebug.ini
