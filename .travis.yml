@@ -77,8 +77,10 @@ mysql:
   encoding: utf8
 
 before_install:
-  - ls -lash
-  - ls -l xdebug.ini
+  - php -i | grep xdebug
+  - php -i | grep ini
+  # Kill the build
+  - false
   - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
