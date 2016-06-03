@@ -2,14 +2,40 @@
 
 namespace Drupal\akamai\Form;
 
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A configuration form to interact with Akamai API settings.
  */
 class ConfigForm extends ConfigFormBase {
+
+  /**
+   * Constructs a new ConfigForm.
+   *
+   * @param ConfigFactory $configFactory
+   *   The ConfigFactory service.
+   * @param RequestStack $request_stack
+   *   The request_stack service.
+   */
+  public function __construct(ConfigFactory $configFactory, RequestStack $request_stack) {
+    $this->requestStack = $request_stack;
+    parent::__construct($configFactory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('request_stack')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -28,9 +54,28 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
+   *
+   */
+  public function requireHttpsMessage() {
+    $form = array();
+
+    $form['require_https'] = array(
+      '#type' => 'html_tag',
+      '#tag' => 'p',
+      '#value' => $this->t('To ensure that Akamai credentials are never transmitted in clear text over the internet, this form can only be accessed via HTTPs.'),
+    );
+
+    return $form;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    if ($this->isHttps() === FALSE) {
+      return $this->requireHttpsMessage();
+    }
+
     $config = $this->config('akamai.settings');
 
     // @todo decide whether we want a global killswitch here.
@@ -256,6 +301,17 @@ class ConfigForm extends ConfigFormBase {
 
     $action[$value] = TRUE;
     return $action;
+  }
+
+  /**
+   * Checks that the form is being accessed over HTTPs.
+   *
+   * @return bool
+   *   TRUE if page was requested via HTTPs, FALSE if not.
+   */
+  protected function isHttps() {
+    $request = $this->requestStack->getCurrentRequest();
+    return $request->getScheme() === 'https';
   }
 
 }
