@@ -54,32 +54,22 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
-   *
+   * Shows a warning via drupal_set_message().
    */
-  public function requireHttpsMessage() {
-    $form = array();
-
-    $form['require_https'] = array(
-      '#type' => 'html_tag',
-      '#tag' => 'p',
-      '#value' => $this->t('To ensure that Akamai credentials are never transmitted in clear text over the internet, this form can only be accessed via HTTPs.'),
-    );
-
-    return $form;
+  public function httpsWarning() {
+    drupal_set_message($this->t('If you submit this form via HTTP, your API credentials will be sent in clear text and may be intercepted. For information on setting up HTTPs, see <a href="https://www.drupal.org/https-information">Enabling HTTPs</a>.'), 'warning');
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = array();
     if ($this->isHttps() === FALSE) {
-      return $this->requireHttpsMessage();
+      $this->httpsWarning();
     }
 
     $config = $this->config('akamai.settings');
-
-    // @todo decide whether we want a global killswitch here.
-    $form = array();
 
     // Link to instructions on how to get Akamai credentials from Luna.
     $luna_url = 'https://developer.akamai.com/introduction/Prov_Creds.html';
