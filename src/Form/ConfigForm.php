@@ -2,14 +2,42 @@
 
 namespace Drupal\akamai\Form;
 
+use Drupal\akamai\CredentialsFactory;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A configuration form to interact with Akamai API settings.
  */
 class ConfigForm extends ConfigFormBase {
+
+  /**
+   * A credentials provider.
+   *
+   * @var CredentialsInterface
+   */
+  protected $credentials;
+
+  /**
+   * Constructs a Drupal\akamai\Form\ConfigForm.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, CredentialsFactory $credentialsFactory) {
+    $this->credentials = $credentialsFactory->getCredentials();
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('akamai.credentials_factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -50,28 +78,28 @@ class ConfigForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('REST API URL'),
       '#description'   => $this->t('The URL of the Akamai CCUv2 API host. It should be in the format *.purge.akamaiapis.net/'),
-      '#default_value' => $config->get('rest_api_url'),
+      '#default_value' => $this->credentials->getRestApiUrl(),
     );
 
     $form['akamai_credentials_fieldset']['access_token'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Access Token'),
       '#description'   => $this->t('Access token.'),
-      '#default_value' => $config->get('access_token'),
+      '#default_value' => $this->credentials->getAccessToken(),
     );
 
     $form['akamai_credentials_fieldset']['client_token'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Client Token'),
       '#description'   => $this->t('Client token.'),
-      '#default_value' => $config->get('client_token'),
+      '#default_value' => $this->credentials->getClientToken(),
     );
 
     $form['akamai_credentials_fieldset']['client_secret'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Client Secret'),
       '#description'   => $this->t('Client secret.'),
-      '#default_value' => $config->get('client_secret'),
+      '#default_value' => $this->credentials->getClientSecret(),
     );
 
     global $base_url;
@@ -176,10 +204,6 @@ class ConfigForm extends ConfigFormBase {
     $values = $form_state->getValues();
 
     $this->config('akamai.settings')
-      ->set('rest_api_url', $values['rest_api_url'])
-      ->set('client_token', $values['client_token'])
-      ->set('client_secret', $values['client_secret'])
-      ->set('access_token', $values['access_token'])
       ->set('basepath', $values['basepath'])
       ->set('timeout', $values['timeout'])
       ->set('status_expire', $values['status_expire'])
@@ -189,6 +213,12 @@ class ConfigForm extends ConfigFormBase {
       ->set('mock_endpoint', $values['mock_endpoint'])
       ->set('log_requests', $values['log_requests'])
       ->save();
+
+    $this->credentials
+      ->saveRestApiUrl($values['rest_api_url'])
+      ->saveClientToken($values['client_token'])
+      ->saveClientSecret($values['client_secret'])
+      ->saveAccessToken($values['access_token']);
 
     $this->checkCredentials();
     drupal_set_message($this->t('Settings saved.'));

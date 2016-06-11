@@ -60,3 +60,7 @@ akamai.settings:
     status_expire:
       type: integer
       label: 'Expire purge status log entries after this many seconds'
+    encryption_iv:
+      type: string
+      label: 'Initialization Vector'
+      description: 'Initialization vector to use when encrypting credentials for storage.'

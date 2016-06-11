@@ -54,6 +54,21 @@ https://developer.akamai.com/introduction/Prov_Creds.html
 
 You will need admin access to the Luna control panel to create credentials.
 
+Akamai requires that credentials are not stored in plain text in Drupal's
+database. This module will transparently encrypt and decrypt credential values
+that are saved via the config form.
+
+If you wish to store credentials in settings.php instead:
+
+```
+$settings['akamai.settings']['credentials_storage'] = 'settings';
+$settings['akamai.settings']['rest_api_url'] = 'your unique url
+$settings['akamai.settings']['client_token'] = 'your unique client token';
+$settings['akamai.settings']['client_secret'] = 'your unique secret';
+$settings['akamai.settings']['access_token'] = 'your unique access token';
+
+```
+
 
 ## Usage
 

@@ -11,6 +11,8 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
 use Psr\Log\LoggerInterface;
+use Drupal\akamai\CredentialsInterface;
+use Drupal\akamai\CredentialsFactory;
 
 /**
  * Connects to the Akamai EdgeGrid.
@@ -105,8 +107,10 @@ class AkamaiClient extends Client {
    *   A logger instance.
    * @param \Drupal\akamai\StatusStorage $status_storage
    *   A status logger for tracking purge responses.
+   * @param \Drupal\akamai\CredentialsFactory $credentialsFactory
+   *   A credentials provider factory.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LoggerInterface $logger, StatusStorage $status_storage) {
+  public function __construct(ConfigFactoryInterface $config_factory, LoggerInterface $logger, StatusStorage $status_storage, CredentialsFactory $credentialsFactory) {
     $this->logger = $logger;
     $this->drupalConfig = $config_factory->get('akamai.settings');
     $this->akamaiClientConfig = $this->createClientConfig();
@@ -122,8 +126,9 @@ class AkamaiClient extends Client {
       // Sets logging.
       ->setLogRequests($this->drupalConfig->get('log_requests'));
 
+    $credentials = $credentialsFactory->getCredentials();
     // Create an authentication object so we can sign requests.
-    $auth = AkamaiAuthentication::create($config_factory);
+    $auth = AkamaiAuthentication::create($config_factory, $credentials);
 
     if ($this->logRequests) {
       $this->enableRequestLogging();

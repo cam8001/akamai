@@ -4,6 +4,7 @@ namespace Drupal\akamai;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Akamai\Open\EdgeGrid\Authentication;
+use Drupal\akamai\CredentialsInterface;
 
 /**
  * Connects to the Akamai EdgeGrid.
@@ -18,13 +19,15 @@ class AkamaiAuthentication extends Authentication {
   /**
    * AkamaiAuthentication factory method, following superclass patterns.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
-   *   A config factory, for getting client authentication details.
+   * @param ConfigFactoryInterface $config
+   *   A config factory, for getting module config.
+   * @param CredentialsInterface $credentials
+   *   A set of credentials for authenticating with Akamai.
    *
    * @return \Drupal\akamai\AkamaiAuthentication
    *   An authentication object.
    */
-  public static function create(ConfigFactoryInterface $config) {
+  public static function create(ConfigFactoryInterface $config, CredentialsInterface $credentials) {
     // Following the pattern in the superclass.
     $auth = new static();
 
@@ -34,13 +37,13 @@ class AkamaiAuthentication extends Authentication {
       $auth->setHost($config->get('mock_endpoint'));
     }
     else {
-      $auth->setHost($config->get('rest_api_url'));
+      $auth->setHost($credentials->getRestApiUrl());
       // Set the auth credentials up.
       // @see Authentication::createFromEdgeRcFile()
       $auth->setAuth(
-        $config->get('client_token'),
-        $config->get('client_secret'),
-        $config->get('access_token')
+        $credentials->getClientToken(),
+        $credentials->getClientSecret(),
+        $credentials->getAccessToken()
       );
     }
 
