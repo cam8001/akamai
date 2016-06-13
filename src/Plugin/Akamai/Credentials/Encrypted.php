@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\akamai;
+namespace Drupal\akamai\Plugin\Akamai\Credentials;
 
-use Behat\Mink\Exception\Exception;
+use Exception;
+use Drupal\akamai\Annotation\AkamaiCredentials;
+use Drupal\akamai\CredentialsInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Config\ConfigFactory;
 
 /**
- * Implements encrypted credentials that are stored in Config.
+ * @AkamaiCredentials(
+ *   id = "encrypted"
+ * )
  */
-class CredentialsEncrypted implements CredentialsInterface {
+class Encrypted implements CredentialsInterface {
 
   /**
    * A string used for signing encryption.
@@ -39,8 +43,8 @@ class CredentialsEncrypted implements CredentialsInterface {
    * Contructs a CredentialsEncrypted object.
    *
    * - Uses the global hash_salt (stored in settings.php) as encryption key
-   * - Uses a initialization vector [iv] stored in Config. If there is no
-   *   [iv] stored, nothing has yet been encrypted, so create one and store it.
+   * - Uses a initialization vector [IV] stored in Config. If there is no
+   *   IV stored, nothing has yet been encrypted, so create one and store it.
    */
   public function __construct(ConfigFactory $configFactory) {
     $this->config = $configFactory->getEditable('akamai.settings');

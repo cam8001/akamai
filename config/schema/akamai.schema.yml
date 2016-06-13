@@ -60,6 +60,9 @@ akamai.settings:
     status_expire:
       type: integer
       label: 'Expire purge status log entries after this many seconds'
+    credentials_plugin:
+      type: string
+      label: 'Credentials provider plugin in use'
     encryption_iv:
       type: string
       label: 'Initialization Vector'

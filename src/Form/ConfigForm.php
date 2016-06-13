@@ -2,7 +2,7 @@
 
 namespace Drupal\akamai\Form;
 
-use Drupal\akamai\CredentialsFactory;
+use Drupal\akamai\CredentialsPluginManager;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -24,8 +24,8 @@ class ConfigForm extends ConfigFormBase {
   /**
    * Constructs a Drupal\akamai\Form\ConfigForm.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, CredentialsFactory $credentialsFactory) {
-    $this->credentials = $credentialsFactory->getCredentials();
+  public function __construct(ConfigFactoryInterface $config_factory, CredentialsPluginManager $credentialsPluginManager) {
+    $this->credentials = $credentialsPluginManager->getPlugin();
     parent::__construct($config_factory);
   }
 
@@ -35,7 +35,7 @@ class ConfigForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
-      $container->get('akamai.credentials_factory')
+      $container->get('plugin.manager.akamai.credentials')
     );
   }
 

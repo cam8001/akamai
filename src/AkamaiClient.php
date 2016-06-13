@@ -107,10 +107,10 @@ class AkamaiClient extends Client {
    *   A logger instance.
    * @param \Drupal\akamai\StatusStorage $status_storage
    *   A status logger for tracking purge responses.
-   * @param \Drupal\akamai\CredentialsFactory $credentialsFactory
+   * @param \Drupal\akamai\CredentialsPluginManager $credentials_plugin_manager
    *   A credentials provider factory.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LoggerInterface $logger, StatusStorage $status_storage, CredentialsFactory $credentialsFactory) {
+  public function __construct(ConfigFactoryInterface $config_factory, LoggerInterface $logger, StatusStorage $status_storage, CredentialsPluginManager $credentials_plugin_manager) {
     $this->logger = $logger;
     $this->drupalConfig = $config_factory->get('akamai.settings');
     $this->akamaiClientConfig = $this->createClientConfig();
@@ -126,7 +126,7 @@ class AkamaiClient extends Client {
       // Sets logging.
       ->setLogRequests($this->drupalConfig->get('log_requests'));
 
-    $credentials = $credentialsFactory->getCredentials();
+    $credentials = $credentials_plugin_manager->getPlugin();
     // Create an authentication object so we can sign requests.
     $auth = AkamaiAuthentication::create($config_factory, $credentials);
 

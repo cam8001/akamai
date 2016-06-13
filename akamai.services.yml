@@ -1,10 +1,10 @@
 services:
   akamai.edgegridclient:
     class: Drupal\akamai\AkamaiClient
-    arguments: ['@config.factory', '@logger.channel.akamai', '@akamai.status_storage', '@akamai.credentials_factory']
-  akamai.credentials_factory:
-    class: Drupal\akamai\CredentialsFactory
-    arguments: ['@config.factory']
+    arguments: ['@config.factory', '@logger.channel.akamai', '@akamai.status_storage', '@plugin.manager.akamai.credentials']
+  plugin.manager.akamai.credentials:
+    class: Drupal\akamai\CredentialsPluginManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@config.factory']
   akamai.status_storage:
     class: Drupal\akamai\StatusStorage
     arguments: ['@config.factory', '@logger.channel.akamai']

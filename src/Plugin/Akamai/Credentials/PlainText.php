@@ -1,13 +1,16 @@
 <?php
 
-namespace Drupal\akamai;
+namespace Drupal\akamai\Plugin\Akamai\Credentials;
 
 use Drupal\Core\Config\ConfigFactory;
+use Drupal\akamai\CredentialsInterface;
 
 /**
- * A plaintext credentials provider, used only for testing.
+ * @AkamaiCredentials(
+ *   id = "plain_text"
+ * )
  */
-class CredentialsPlainText implements CredentialsInterface {
+class PlainText implements CredentialsInterface {
 
 
   protected $config;
