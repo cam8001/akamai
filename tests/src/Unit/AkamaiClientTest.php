@@ -8,8 +8,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @coversDefaultClass \Drupal\akamai\AkamaiClient
- *
- * @group Akamai
+ * @group akamai
  */
 class AkamaiClientTest extends UnitTestCase {
 

@@ -7,8 +7,7 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * @coversDefaultClass \Drupal\akamai\AkamaiAuthentication
- *
- * @group Akamai
+ * @group akamai
  */
 class AkamaiAuthenticationTest extends UnitTestCase {
 
